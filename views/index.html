@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      href="https://fonts.cdnfonts.com/css/ubuntu-mono-2"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css?=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Docker Network Visualizer</h2>
+    </header>
+    <main>
+      <div class="pingtest">
+        <div class="ping">Ping Containers to check Network</div>
+        <select class="c1">
+          {{range .networks}}
+            <option value="{{.NetworkInfo.ID}}">{{.Name}}</option>
+          {{end}}
+        </select>
+        <select class="c2">
+          {{range .networks}}
+            <option value="{{.NetworkInfo.ID}}">{{.Name}}</option>
+          {{end}}       
+        </select>
+        <button class="pingbtn">Ping</button>
+      </div>
+      <hr />
+      <div class="networks-container">
+        <h2>Networks</h2>
+        <div class="networks">
+          {{range .networks}}
+            <div class="network-card">
+              <p class="network-name">{{.Name}}</p>
+              <div class="containers">
+                {{range .NetworkInfo.Containers}}
+                  <div class="container-card">
+                    <p class="container-name">{{.Name}}</p>
+                    <p class="container-ip">{{.IPv4Address}}</p>
+                  </div>
+                {{end}}
+              </div>
+            </div>
+          {{end}}
+        </div>
+      </div>
+    </main>
+    <script lang="js">
+      document.querySelector(".pingbtn").addEventListener('click',e=>{
+        console.log(e)
+      })
+    </script>
+  </body>
+</html>

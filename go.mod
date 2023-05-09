@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/docker/docker v23.0.5+incompatible
 	github.com/gofiber/fiber/v2 v2.45.0
+	github.com/gofiber/template v1.8.1
 )
 
 require (
