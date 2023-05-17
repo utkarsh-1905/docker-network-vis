@@ -53,7 +53,7 @@ header > h1 {
 
 .networks {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
@@ -61,15 +61,52 @@ header > h1 {
   margin: 0 auto;
 }
 
+.network-name {
+  color: whitesmoke;
+  margin: 0.5rem;
+  margin-left: 0;
+  text-decoration: underline;
+  text-transform: uppercase;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
 .network-card {
   background-color: antiquewhite;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+  border-radius: 12px;
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  height: auto;
   color: black;
-  cursor: pointer;
+  padding: 0.75rem;
+}
+
+.containers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  max-width: 95%;
+  margin: 0 auto;
+}
+
+.container-card {
+  background-color: lightskyblue;
+  border-radius: 12px;
+  padding: 0.5rem;
+  text-align: center;
+  width: fit-content;
+}
+
+.container-absent {
+  color: gray;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.container-name {
+  font-weight: bolder;
+  text-transform: uppercase;
 }

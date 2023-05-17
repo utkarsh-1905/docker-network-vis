@@ -1,1 +1,1 @@
-sudo docker run -d -p 6904:3000 --rm --net web --name docker-vis -l traefik.http.routers.network.rule="Host(\`network.utkarsh.ninja\`)" -l traefik.http.routers.network.tls=true -l traefik.http.routers.network.tls.certresolver=lets-encrypt -l traefik.port=80 -v /var/run/docker.sock:/var/run/docker.sock docker-vis:latest
+sudo docker run -d -p 6904:3000 --rm --net web --name docker-vis -v /var/run/docker.sock:/var/run/docker.sock docker-vis:latest

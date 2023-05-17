@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"log"
+	"sort"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -25,8 +26,10 @@ func main() {
 	})
 
 	type FullNetwork struct {
-		Name        string
-		NetworkInfo types.NetworkResource
+		Name               string
+		NetworkInfo        types.NetworkResource
+		NumberOfContainers int
+		ContainerPresent   bool
 	}
 
 	app.Get("/networks", func(c *fiber.Ctx) error {
@@ -35,8 +38,10 @@ func main() {
 		for _, network := range networks {
 			networkInfo := util.GetNetworkInfo(ctx, cli, network.ID)
 			var container FullNetwork = FullNetwork{
-				Name:        network.Name,
-				NetworkInfo: networkInfo,
+				Name:               network.Name,
+				NetworkInfo:        networkInfo,
+				NumberOfContainers: len(networkInfo.Containers),
+				ContainerPresent:   len(networkInfo.Containers) > 0,
 			}
 			fullNetwork = append(fullNetwork, container)
 		}
@@ -59,11 +64,21 @@ func main() {
 		for _, network := range networks {
 			networkInfo := util.GetNetworkInfo(ctx, cli, network.ID)
 			var container FullNetwork = FullNetwork{
-				Name:        network.Name,
-				NetworkInfo: networkInfo,
+				Name:               network.Name,
+				NetworkInfo:        networkInfo,
+				NumberOfContainers: len(networkInfo.Containers),
+				ContainerPresent:   len(networkInfo.Containers) > 0,
 			}
 			fullNetwork = append(fullNetwork, container)
 		}
+		//sort fullNetwork array in which networkInfo.Containers contain more containers
+		sort.Slice(fullNetwork, func(i, j int) bool {
+			if fullNetwork[i].NumberOfContainers > fullNetwork[j].NumberOfContainers {
+				return true
+			} else {
+				return false
+			}
+		})
 		return c.Render("index", fiber.Map{
 			"networks": fullNetwork,
 		})

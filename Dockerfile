@@ -17,5 +17,9 @@ CMD [ "./main.exe" ]
 FROM scratch
 WORKDIR /app
 COPY --from=build /app ./
+LABEL traefik.port=80
+LABEL traefik.http.routers.network.rule="Host(`network.utkarsh.ninja`)"
+LABEL traefik.http.routers.network.tls=true
+LABEL traefik.http.routers.network.tls.certresolver="lets-encrypt"
 EXPOSE 3000
 CMD [ "./main.exe" ]

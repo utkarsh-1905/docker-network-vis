@@ -7,9 +7,10 @@
       href="https://fonts.cdnfonts.com/css/ubuntu-mono-2"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="index.css?=1" />
+    <link rel="stylesheet" href="../public/index.css" />
+    <link rel="stylesheet" href="index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Docker Network Visualizer</title>
   </head>
   <body>
     <header>
@@ -35,8 +36,9 @@
         <h2>Networks</h2>
         <div class="networks">
           {{range .networks}}
-            <div class="network-card">
-              <p class="network-name">{{.Name}}</p>
+          <p class="network-name">{{.Name}}</p>
+          <div class="network-card">
+            {{if .ContainerPresent}}
               <div class="containers">
                 {{range .NetworkInfo.Containers}}
                   <div class="container-card">
@@ -45,6 +47,9 @@
                   </div>
                 {{end}}
               </div>
+            {{else}}
+              <p class="container-absent">No Containers present in this network :(</p>
+            {{end}}
             </div>
           {{end}}
         </div>
