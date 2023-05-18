@@ -98,6 +98,7 @@ header > h1 {
   padding: 0.5rem;
   text-align: center;
   width: fit-content;
+  margin-bottom: 0.75rem;
 }
 
 .container-absent {
