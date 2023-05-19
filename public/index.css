@@ -27,7 +27,7 @@ header > h1 {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  min-height: 20vh;
+  min-height: 15vh;
 }
 
 .ping {
@@ -65,10 +65,15 @@ header > h1 {
   color: whitesmoke;
   margin: 0.5rem;
   margin-left: 0;
-  text-decoration: underline;
   text-transform: uppercase;
   font-weight: bold;
   align-self: flex-start;
+}
+
+.network-id {
+  font-weight: lighter;
+  color: lightgray;
+  font-size: small;
 }
 
 .network-card {
@@ -82,6 +87,11 @@ header > h1 {
   padding: 0.75rem;
 }
 
+.network-subnet,
+.network-driver {
+  text-align: center;
+}
+
 .containers {
   display: flex;
   flex-direction: row;
@@ -93,6 +103,7 @@ header > h1 {
 }
 
 .container-card {
+  cursor: pointer;
   background-color: lightskyblue;
   border-radius: 12px;
   padding: 0.5rem;

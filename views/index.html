@@ -7,8 +7,8 @@
       href="https://fonts.cdnfonts.com/css/ubuntu-mono-2"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../public/index.css" />
-    <link rel="stylesheet" href="index.css" />
+    <!-- <link rel="stylesheet" href="../public/index.css" /> -->
+    <link rel="stylesheet" href="index.css?=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Docker Network Visualizer</title>
   </head>
@@ -19,31 +19,40 @@
     <main>
       <div class="pingtest">
         <div class="ping">Ping Containers to check Network</div>
-        <select class="c1">
-          {{range .networks}}
-            <option value="{{.NetworkInfo.ID}}">{{.Name}}</option>
-          {{end}}
-        </select>
-        <select class="c2">
-          {{range .networks}}
-            <option value="{{.NetworkInfo.ID}}">{{.Name}}</option>
-          {{end}}       
-        </select>
-        <button class="pingbtn">Ping</button>
+          <select name="c1" class="c1">
+            {{range .networks}}
+            {{range .NetworkInfo.Containers}}
+            <option value="{{.IPv4Address}}">{{.Name}}</option>
+            {{end}}
+            <!-- <option value="{{.NetworkInfo.ID}}">{{.Name}}</option> -->
+            {{end}}
+          </select>
+          <select name="c2" class="c2">
+            {{range .networks}}
+            {{range .NetworkInfo.Containers}}
+            <option value="{{.IPv4Address}}">{{.Name}}</option>
+            {{end}}
+            {{end}}       
+          </select>
+          <button class="pingbtn">Ping</button>
       </div>
       <hr />
       <div class="networks-container">
         <h2>Networks</h2>
         <div class="networks">
           {{range .networks}}
-          <p class="network-name">{{.Name}}</p>
+          <p class="network-name">{{.Name}} <span class="network-id">{{.NetworkInfo.ID}}</span></p>
           <div class="network-card">
+            {{range .NetworkInfo.IPAM.Config}}
+            <p class="network-subnet">Subnet: {{.Subnet}}</p>
+            {{end}}
+            <p class="network-driver">Driver: {{.NetworkInfo.Driver}}</p>
             {{if .ContainerPresent}}
               <div class="containers">
                 {{range .NetworkInfo.Containers}}
-                  <div class="container-card">
-                    <p class="container-name">{{.Name}}</p>
-                    <p class="container-ip">{{.IPv4Address}}</p>
+                  <div data-name="{{.Name}}" class="container-card">
+                    <p data-name="{{.Name}}" class="container-name">{{.Name}}</p>
+                    <p data-name="{{.Name}}" class="container-ip">{{.IPv4Address}}</p>
                   </div>
                 {{end}}
               </div>
@@ -56,8 +65,20 @@
       </div>
     </main>
     <script lang="js">
-      document.querySelector(".pingbtn").addEventListener('click',e=>{
-        console.log(e)
+      const c1 = document.querySelector(".c1");
+      const c2 = document.querySelector(".c2");
+      document.querySelector(".pingbtn").addEventListener('click',(e)=>{
+        if(c1.value===c2.value){
+          alert("Please select different containers");
+          return;
+        }else{
+          console.log(c1.value,c2.value);
+        }
+      })
+      document.querySelectorAll(".container-card").forEach((card)=>{
+        card.addEventListener('click',e=>{
+          console.log(e.target.dataset.name);
+        })
       })
     </script>
   </body>
